@@ -7,13 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 import ru.neoflex.ec.project.entity.ProductEntity;
 
+import java.util.List;
+
 @Component
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Modifying
     @Query(value = "select * from public.product p where p.count > 0", nativeQuery = true)
-    void findByAvailable();
+    List<ProductEntity> findByAvailable();
 
     @Modifying
     @Query(value = "select p.count from public.product p where p.id = :idProduct", nativeQuery = true)
-    void findByCount(@Param("idProduct") Long id);
+    List<ProductEntity> findByCount(@Param("idProduct") Long id);
 }
